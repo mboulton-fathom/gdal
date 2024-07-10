@@ -21,6 +21,7 @@ cc_library(
         "//gcore:headers",
         "//ogr/ogrsf_frmts:headers",
         "//port:headers",
+        "@proj",
     ],
     copts = [
         "-Igcore",

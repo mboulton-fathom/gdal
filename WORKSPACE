@@ -39,7 +39,7 @@ register_toolchains(
 
 http_archive(
     name = "proj",
-    build_file = "//3rdparty/gdal:proj.BUILD.bazel",
+    build_file = "//:proj.BUILD.bazel",
     sha256 = "ead6a1d15ac35013db32046e46d36e93caeb1d8f6b83a44bce120bd5a8cf53c2",
     strip_prefix = "PROJ-9.3.1",
     url = "https://github.com/OSGeo/PROJ/archive/refs/tags/9.3.1.tar.gz",
