@@ -2,6 +2,9 @@ build --action_env BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
 
 build --cxxopt='-std=c++17'
 build --host_cxxopt='-std=c++17'
+build --cxxopt='-fdiagnostics-color=always'
+build --host_cxxopt='-fdiagnostics-color=always'
+
 
 build --incompatible_strict_action_env
 build --noincompatible_remote_symlinks

@@ -26,6 +26,7 @@ cc_library(
     ],
     hdrs = [
         ":headers",
+        "//alg:headers",
         "//apps:headers",
         "//gcore:headers",
         "//ogr:headers",
@@ -34,6 +35,7 @@ cc_library(
     ],
     copts = [
         "-Iogr",
+        "-Ialg",
         "-Iapps",
         "-Iogr/ogrsf_frmts",
         "-Iport",

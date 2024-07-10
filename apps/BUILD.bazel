@@ -1,6 +1,7 @@
 package(default_visibility = ["//:__subpackages__"])
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//apps:gdal_app.bzl", "gdal_app")
 
 filegroup(
     name = "headers",
@@ -11,12 +12,9 @@ filegroup(
 )
 
 cc_library(
-    name = "apps",
-    srcs = glob([
-        "*.c",
-        "*.cpp",
-    ]),
-    hdrs = [
+    name = "argparse",
+    srcs = [
+        "gdalargumentparser.cpp",
         ":headers",
         "//alg:headers",
         "//frmts/gtiff:headers",
@@ -35,7 +33,10 @@ cc_library(
         "-Ignm",
         "-I.",
         "-Igcore",
+        "-Iport",
+        "-I$(GENDIR)/port",
         "-Ialg",
+        "-Iogr",
         "-Iogr/ogrsf_frmts",
         "-Iogr/ogrsf_frmts/mem",
         "-Iogr/ogrsf_frmts/geojson",
@@ -44,14 +45,21 @@ cc_library(
         "-Ifrmts/vrt",
         "-Ifrmts/gtiff",
     ],
-    includes = [
-        "../gcore",
-        "../ogr",
-        "../port",
-    ],
+    defines = ["GDAL_COMPILATION"],
     deps = [
         "//apps/argparse",
-        "//frmts/vrt",
-        "@proj",
+        "//gcore",
+    ],
+)
+
+gdal_app(
+    name = "gdalinfo",
+    extra_deps = [
+        "//ogr/ogrsf_frmts/geojson",
+        "//frmts/gtiff",
+    ],
+    extra_srcs = [
+        ":gdalinfo_bin.cpp",
+        "gdalinfo_lib.cpp",
     ],
 )

@@ -23,6 +23,7 @@ expand_template_rule(
         "@VSI_FTRUNCATE64@": "ftruncate",
         "@VSI_FSEEK64@": "fseek",
         "@VSI_FTELL64@": "ftell",
+        "@HAVE_GCC_WARNING_ZERO_AS_NULL_POINTER_CONSTANT@": "1",
         "@CPL_CONFIG_EXTRAS@": "",
         "HAVE_DIRECT_H 1": "_HAVE_DIRECT_H 0",
         "HAVE_XLOCALE_H 1": "_HAVE_XLOCALE_H 0",
@@ -76,6 +77,5 @@ cc_library(
     ],
     deps = [
         "//frmts/zlib",
-        "//ogr",
     ],
 )

@@ -45,6 +45,9 @@ cc_library(
         "-Iport",
         "-I$(GENDIR)/port",
     ],
-    defines = ["GDAL_COMPILATION"],
+    defines = [
+        "GDAL_COMPILATION",
+        "HAVE_SSE_AT_COMPILE_TIME",
+    ],
     deps = ["@proj"],
 )

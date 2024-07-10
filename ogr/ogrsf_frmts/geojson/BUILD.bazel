@@ -38,4 +38,8 @@ cc_library(
         "-I$(GENDIR)/gcore",
     ],
     defines = ["GDAL_COMPILATION"],
+    deps = [
+        "//gcore",
+        "//ogr/ogrsf_frmts/geojson/libjson",
+    ],
 )

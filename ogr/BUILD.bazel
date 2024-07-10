@@ -43,5 +43,8 @@ cc_library(
         "-Iogr/ogrsf_frmts/geojson/libjson",
     ],
     defines = ["GDAL_COMPILATION"],
-    deps = ["@proj"],
+    deps = [
+        "//port",
+        "@proj",
+    ],
 )
