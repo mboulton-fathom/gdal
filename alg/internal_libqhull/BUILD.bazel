@@ -1,0 +1,9 @@
+package(default_visibility = ["//:__subpackages__"])
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "internal_libqhull",
+    srcs = glob(["*.c"]),
+    hdrs = glob(["*.h"]),
+)

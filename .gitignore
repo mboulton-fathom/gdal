@@ -170,3 +170,8 @@ gdal/share
 /build
 CMakeSettings.json
 out/
+
+.clwb
+bazel-*
+venv
+.ijwb

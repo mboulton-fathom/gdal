@@ -1,0 +1,6 @@
+build --action_env BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+
+build --cxxopt='-std=c++17'
+build --host_cxxopt='-std=c++17'
+
+try-import %workspace%/.bazelrc.user

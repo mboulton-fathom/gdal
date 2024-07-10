@@ -1,0 +1,35 @@
+package(default_visibility = ["//:__subpackages__"])
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+filegroup(
+    name = "headers",
+    srcs = glob(["*.h"]),
+)
+
+cc_library(
+    name = "alg",
+    srcs = glob(
+        [
+            "*.cpp",
+            "*.c",
+        ],
+        allow_empty = False,
+    ),
+    hdrs = [
+        ":headers",
+        "//alg/marching_squares",
+        "//gcore",
+        "//port",
+    ],
+    includes = [
+        "../gcore",
+        "../ogr",
+        "../port",
+        "marching_squares",
+    ],
+    deps = [
+        "//gcore",
+        "//port",
+    ],
+)

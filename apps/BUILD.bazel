@@ -1,0 +1,40 @@
+package(default_visibility = ["//:__subpackages__"])
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+filegroup(
+    name = "headers",
+    srcs = glob([
+        "*.h",
+        "*.hpp",
+    ]),
+)
+
+cc_library(
+    name = "apps",
+    srcs = glob([
+        "*.c",
+        "*.cpp",
+    ]),
+    hdrs = [
+        ":headers",
+        "//alg:headers",
+        "//frmts/vrt:headers",
+        "//gcore:headers",
+        "//ogr:headers",
+        "//port:headers",
+    ],
+    copts = [
+        "-Igcore",
+        "-Ialg",
+    ],
+    includes = [
+        "../gcore",
+        "../ogr",
+        "../port",
+    ],
+    deps = [
+        "//apps/argparse",
+        "//frmts/vrt",
+    ],
+)

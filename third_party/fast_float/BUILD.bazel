@@ -1,0 +1,7 @@
+filegroup(
+    name = "fast_float",
+    srcs = glob(
+        ["*.h"],
+        allow_empty = False,
+    ),
+)

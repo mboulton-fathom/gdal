@@ -1,0 +1,6 @@
+package(default_visibility = ["//:__subpackages__"])
+
+filegroup(
+    name = "cpl_config_template",
+    srcs = [":cpl_config.h.in"],
+)
