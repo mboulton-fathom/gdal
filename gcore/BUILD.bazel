@@ -14,7 +14,7 @@ filegroup(
     srcs = glob([
         "*.h",
         "*.hpp",
-    ]) + [":gdal_version.h"],
+    ]) + [":gdal_version_header"],
 )
 
 cc_library(

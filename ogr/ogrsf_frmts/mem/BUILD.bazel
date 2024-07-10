@@ -30,5 +30,6 @@ cc_library(
         "-Iogr/ogrsf_frmts",
         "-I$(GENDIR)/port",
     ],
+    defines = ["GDAL_COMPILATION"],
     includes = ["../../../gcore"],
 )

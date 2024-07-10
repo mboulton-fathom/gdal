@@ -36,6 +36,7 @@ filegroup(
         "*.hpp",
     ]) + [
         ":cpl_config.h",
+        "//third_party/fast_float",
     ],
 )
 
@@ -51,16 +52,17 @@ cc_library(
     copts = [
         "-Ifrmts/zlib",
         "-Iogr",
+        "-I.",
         "-I$(GENDIR)/port",
     ],
     defines = [
-        "GDAL_COMPILATION=1",
+        "GDAL_COMPILATION",
     ],
     includes = [
         "$(GENDIR)/port",
     ],
     local_defines = [
-        "CPL_MSB=1",
+        "CPL_LSB=1",
     ],
     deps = [
         "//frmts/zlib",

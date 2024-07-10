@@ -35,4 +35,5 @@ cc_library(
         "-Iapps",
         "-Iogr/ogrsf_frmts",
     ],
+    defines = ["GDAL_COMPILATION"],
 )

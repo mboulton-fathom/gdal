@@ -22,11 +22,16 @@ cc_library(
         "//frmts/vrt:headers",
         "//gcore:headers",
         "//ogr:headers",
+        "//ogr/ogrsf_frmts:headers",
+        "//ogr/ogrsf_frmts/mem:headers",
         "//port:headers",
     ],
     copts = [
         "-Igcore",
         "-Ialg",
+        "-Iogr/ogrsf_frmts",
+        "-Iogr/ogrsf_frmts/mem",
+        "-Ifrmts/vrt",
     ],
     includes = [
         "../gcore",
