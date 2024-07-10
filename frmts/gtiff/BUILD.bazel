@@ -11,37 +11,41 @@ filegroup(
 )
 
 cc_library(
-    name = "ogr",
+    name = "gtiff",
     srcs = glob(
         [
             "*.c",
             "*.cpp",
         ],
         exclude = [
-            "ogr_capi_test.c",
-            "test_geo_utils.cpp",
+            "*jxl*",
+            "*quant*",
         ],
-    ),
+    ) + [
+        "//port:cpl_md5.cpp",
+    ],
     hdrs = [
         ":headers",
+        "//apps:headers",
         "//gcore:headers",
+        "//ogr:headers",
         "//ogr/ogrsf_frmts:headers",
-        "//ogr/ogrsf_frmts/geojson:headers",
-        "//ogr/ogrsf_frmts/geojson/libjson:headers",
-        "//ogr/ogrsf_frmts/mem:headers",
         "//port:headers",
     ],
     copts = [
-        "-Igcore",
         "-Iogr",
+        "-Iapps",
+        "-Iogr/ogrsf_frmts",
         "-Iport",
         "-I$(GENDIR)/port",
+        "-Igcore",
         "-I$(GENDIR)/gcore",
-        "-Iogr/ogrsf_frmts",
-        "-Iogr/ogrsf_frmts/mem",
-        "-Iogr/ogrsf_frmts/geojson",
-        "-Iogr/ogrsf_frmts/geojson/libjson",
+        "-Ifrmts/gtiff/libtiff",
+        "-Ifrmts/gtiff/libgeotiff",
     ],
     defines = ["GDAL_COMPILATION"],
-    deps = ["@proj"],
+    deps = [
+        "//frmts/gtiff/libgeotiff",
+        "//frmts/gtiff/libtiff",
+    ],
 )

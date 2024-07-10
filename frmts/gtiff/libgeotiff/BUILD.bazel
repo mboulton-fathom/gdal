@@ -11,16 +11,15 @@ filegroup(
 )
 
 cc_library(
-    name = "mem",
+    name = "libgeotiff",
     srcs = glob([
         "*.c",
         "*.cpp",
+        "*.inc",
     ]),
     hdrs = [
         ":headers",
         "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
         "//port:headers",
     ],
     copts = [
@@ -28,8 +27,11 @@ cc_library(
         "-I$(GENDIR)/port",
         "-Igcore",
         "-I$(GENDIR)/gcore",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts",
+        "-Ifrmts/gtiff/libtiff",
     ],
     defines = ["GDAL_COMPILATION"],
+    deps = [
+        "//frmts/gtiff/libtiff",
+        "@proj",
+    ],
 )

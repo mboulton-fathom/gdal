@@ -9,12 +9,22 @@ genrule(
     cmd = """cat $< > $@""",
 )
 
+genrule(
+    name = "gdal_version_subfolder_header",
+    srcs = ["gdal_version.h.in"],
+    outs = ["gdal_version_full/gdal_version.h"],
+    cmd = """cat $< > $@""",
+)
+
 filegroup(
     name = "headers",
     srcs = glob([
         "*.h",
         "*.hpp",
-    ]) + [":gdal_version_header"],
+    ]) + [
+        "gdal_version_header",
+        "gdal_version_subfolder_header",
+    ],
 )
 
 cc_library(

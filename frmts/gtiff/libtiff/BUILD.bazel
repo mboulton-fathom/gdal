@@ -11,7 +11,7 @@ filegroup(
 )
 
 cc_library(
-    name = "mem",
+    name = "libtiff",
     srcs = glob([
         "*.c",
         "*.cpp",
@@ -19,8 +19,6 @@ cc_library(
     hdrs = [
         ":headers",
         "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
         "//port:headers",
     ],
     copts = [
@@ -28,8 +26,6 @@ cc_library(
         "-I$(GENDIR)/port",
         "-Igcore",
         "-I$(GENDIR)/gcore",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts",
     ],
     defines = ["GDAL_COMPILATION"],
 )

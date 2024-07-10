@@ -4,32 +4,29 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 filegroup(
     name = "headers",
-    srcs = glob([
-        "*.h",
-        "*.hpp",
-    ]),
+    srcs = glob(["*.h"]),
 )
 
 cc_library(
     name = "mem",
-    srcs = glob([
-        "*.c",
-        "*.cpp",
-    ]),
+    srcs = glob(
+        [
+            "*.cpp",
+        ],
+        allow_empty = False,
+    ),
     hdrs = [
         ":headers",
         "//gcore:headers",
         "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
         "//port:headers",
     ],
     copts = [
+        "-Iogr",
         "-Iport",
         "-I$(GENDIR)/port",
         "-Igcore",
         "-I$(GENDIR)/gcore",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts",
     ],
     defines = ["GDAL_COMPILATION"],
 )

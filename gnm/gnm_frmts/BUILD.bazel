@@ -11,7 +11,7 @@ filegroup(
 )
 
 cc_library(
-    name = "mem",
+    name = "gnm_fmts",
     srcs = glob([
         "*.c",
         "*.cpp",
@@ -24,12 +24,12 @@ cc_library(
         "//port:headers",
     ],
     copts = [
-        "-Iport",
-        "-I$(GENDIR)/port",
+        "-Iogr/ogrsf_frmts",
+        "-Iogr",
         "-Igcore",
         "-I$(GENDIR)/gcore",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts",
+        "-Iport",
+        "-I$(GENDIR)/port",
     ],
     defines = ["GDAL_COMPILATION"],
 )

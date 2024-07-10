@@ -11,25 +11,21 @@ filegroup(
 )
 
 cc_library(
-    name = "mem",
+    name = "libjson",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
     hdrs = [
         ":headers",
-        "//gcore:headers",
-        "//ogr:headers",
         "//ogr/ogrsf_frmts:headers",
-        "//port:headers",
+        "//ogr/ogrsf_frmts/mem:headers",
+        "//port",
     ],
     copts = [
+        "-Iogr/ogrsf_frmts",
         "-Iport",
         "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts",
     ],
-    defines = ["GDAL_COMPILATION"],
+    deps = ["//port"],
 )
