@@ -36,11 +36,3 @@ register_toolchains(
     "@zig_sdk//toolchain:windows_arm64",
     "@zig_sdk//toolchain:wasip1_wasm",
 )
-
-http_archive(
-    name = "proj",
-    build_file = "//:proj.BUILD.bazel",
-    sha256 = "ead6a1d15ac35013db32046e46d36e93caeb1d8f6b83a44bce120bd5a8cf53c2",
-    strip_prefix = "PROJ-9.3.1",
-    url = "https://github.com/OSGeo/PROJ/archive/refs/tags/9.3.1.tar.gz",
-)

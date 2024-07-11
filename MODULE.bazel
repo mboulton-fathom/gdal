@@ -1,30 +1,28 @@
-# To build Bazel with Bzlmod: `bazel build --enable_bzlmod //src:bazel_nojdk`.
-
 module(
     name = "gdal",
     version = "0.0.1",
     repo_name = "com_github_osgeo_gdal",
 )
 
-## You pretty much always want these ones
 bazel_dep(name = "buildozer", version = "7.1.2")
-bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "platforms", version = "0.0.10")
-bazel_dep(name = "rules_pkg", version = "0.10.1")
 bazel_dep(name = "aspect_bazel_lib", version = "2.7.8")
-
-## Random extras
-bazel_dep(name = "stardoc", version = "0.7.0", repo_name = "io_bazel_skydoc")
 bazel_dep(name = "zlib", version = "1.3.1.bcr.1")
-
-## Per language
-
-# CC/C extensions
 bazel_dep(name = "rules_cc", version = "0.0.9")
 bazel_dep(name = "rules_foreign_cc", version = "0.11.1")
 bazel_dep(name = "curl", version = "8.8.0")
 bazel_dep(name = "sqlite3", version = "3.42.0.bcr.1")
+bazel_dep(name = "proj", version = "0.0.1")
+git_override(
+    module_name = "proj",
+    commit = "4907bd7eddf8001b850b3bafab817a8ff06ccb88",
+    remote = "https://github.com/mboulton-fathom/PROJ.git",
+)
 
+#local_path_override(
+#    module_name = "proj",
+#    path = "../PROJ",
+#)
 ## TODO python
 # bazel_dep(name = "rules_python", version = "0.33.2")
 # bazel_dep(name = "rules_python_gazelle_plugin", version = "0.33.2")
