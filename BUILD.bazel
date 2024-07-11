@@ -13,7 +13,6 @@ DEP_FOLDERS = [
     "frmts/mem",
     "frmts/hfa",
     "frmts/vrt",
-    "frmts/zlib",
     "gcore",
     "gcore/mdreader",
     "gnm",
@@ -62,5 +61,6 @@ cc_library(
         "@curl",
         "@proj",
         "@sqlite3",
+        "@zlib",
     ],
 )
