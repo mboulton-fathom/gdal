@@ -1,9 +1,11 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+filegroup(
+    name = "headers",
+    srcs = glob(["*.h"]),
+)
 
-cc_library(
+filegroup(
     name = "internal_libqhull",
     srcs = glob(["*.c"]),
-    hdrs = glob(["*.h"]),
 )

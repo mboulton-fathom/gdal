@@ -1,9 +1,16 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+filegroup(
+    name = "headers",
+    srcs = glob([
+        "*.h",
+    ]),
+)
 
-cc_library(
+filegroup(
     name = "mdreader",
-    srcs = glob(["*.c"]),
-    hdrs = glob(["*.h"]),
+    srcs = glob([
+        "*.c",
+        "*.cpp",
+    ]),
 )

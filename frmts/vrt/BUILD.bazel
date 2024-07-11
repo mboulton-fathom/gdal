@@ -10,30 +10,10 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "vrt",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
-    hdrs = [
-        ":headers",
-        "//alg:headers",
-        "//apps:headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iport",
-        "-Ialg",
-        "-Iogr",
-        "-I$(GENDIR)/port",
-        "-I$(GENDIR)/gcore",
-        "-Igcore",
-        "-Iapps",
-        "-Iogr/ogrsf_frmts",
-    ],
-    defines = ["GDAL_COMPILATION"],
 )

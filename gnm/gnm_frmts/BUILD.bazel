@@ -10,26 +10,10 @@ filegroup(
     ]),
 )
 
-cc_library(
-    name = "gnm_fmts",
+filegroup(
+    name = "gnm_frmts",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
-    hdrs = [
-        ":headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iogr/ogrsf_frmts",
-        "-Iogr",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-        "-Iport",
-        "-I$(GENDIR)/port",
-    ],
-    defines = ["GDAL_COMPILATION"],
 )

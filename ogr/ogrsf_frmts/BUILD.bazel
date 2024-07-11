@@ -9,21 +9,9 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "ogrsf_frmts",
-    hdrs = glob([
-        "*.h",
-    ]) + [
-        "//gcore:headers",
-        "//ogr:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-I..",
-        "-I../gcore",
-        "-I../port",
-    ],
-    includes = [
-        "/usr/local",
+    srcs = [
+        ":headers",
     ],
 )

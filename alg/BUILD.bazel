@@ -1,13 +1,13 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 filegroup(
     name = "headers",
-    srcs = glob(["*.h"]),
+    srcs = glob([
+        "*.h",
+    ]),
 )
 
-cc_library(
+filegroup(
     name = "alg",
     srcs = glob(
         [
@@ -15,39 +15,11 @@ cc_library(
             "*.c",
         ],
         allow_empty = False,
-        exclude = ["polygonize_polygonizer.cpp"],
+        exclude = [
+            "polygonize_polygonizer.cpp",
+            #            "polygonize_polygonizer_impl.cpp",
+        ],
     ),
-    hdrs = [
-        ":headers",
-        ":polygonize_polygonizer.cpp",
-        "//alg/marching_squares",
-        "//apps:headers",
-        "//frmts/mem:headers",
-        "//frmts/vrt:headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//ogr/ogrsf_frmts/mem:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-I.",
-        "-Ifrmts/vrt",
-        "-Ifrmts/mem",
-        "-Iogr/ogrsf_frmts/mem",
-        "-Iogr/ogrsf_frmts",
-        "-Ialg/marching_squares",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-        "-Ialg",
-        "-Iogr",
-        "-Iapps",
-        "-Iport",
-        "-I$(GENDIR)/port",
-    ],
-    defines = [
-        "GDAL_COMPILATION",
-        "HAVE_SSE_AT_COMPILE_TIME",
-    ],
-    deps = ["@proj"],
 )
+
+exports_files(["polygonize_polygonizer.cpp"])

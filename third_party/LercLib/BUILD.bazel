@@ -1,12 +1,15 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+filegroup(
+    name = "headers",
+    srcs = glob([
+        "*.h",
+    ]),
+)
 
-cc_library(
+filegroup(
     name = "LercLib",
-    srcs = glob(
-        ["*.cpp"],
-        allow_empty = False,
-    ),
-    hdrs = glob(["*.h"]),
+    srcs = glob([
+        "*.cpp",
+    ]),
 )

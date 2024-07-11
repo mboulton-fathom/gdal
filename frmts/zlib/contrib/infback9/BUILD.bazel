@@ -1,9 +1,0 @@
-#package(default_visibility = ["//frmts/zlib:__pkg__"])
-#
-#load("@rules_cc//cc:defs.bzl", "cc_library")
-#
-#cc_library(
-#    name = "infback9",
-#    srcs = glob(["*.c"]),
-#    hdrs = glob(["*.h"]),
-#)

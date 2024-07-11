@@ -7,7 +7,7 @@ filegroup(
     srcs = glob(["*.h"]),
 )
 
-cc_library(
+filegroup(
     name = "mem",
     srcs = glob(
         [
@@ -15,18 +15,4 @@ cc_library(
         ],
         allow_empty = False,
     ),
-    hdrs = [
-        ":headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iogr",
-        "-Iport",
-        "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-    ],
-    defines = ["GDAL_COMPILATION"],
 )

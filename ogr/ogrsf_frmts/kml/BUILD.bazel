@@ -11,15 +11,16 @@ filegroup(
 )
 
 filegroup(
-    name = "ogr",
+    name = "kml",
     srcs = glob(
         [
             "*.c",
             "*.cpp",
         ],
         exclude = [
-            "ogr_capi_test.c",
-            "test_geo_utils.cpp",
+            "kml.cpp",
+            "kmlnode.cpp",
+            "kmlvector.cpp",
         ],
     ),
 )

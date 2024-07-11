@@ -1,7 +1,5 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 filegroup(
     name = "headers",
     srcs = glob([
@@ -10,28 +8,11 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "libgeotiff",
     srcs = glob([
         "*.c",
         "*.cpp",
         "*.inc",
     ]),
-    hdrs = [
-        ":headers",
-        "//gcore:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iport",
-        "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-        "-Ifrmts/gtiff/libtiff",
-    ],
-    defines = ["GDAL_COMPILATION"],
-    deps = [
-        "//frmts/gtiff/libtiff",
-        "@proj",
-    ],
 )

@@ -10,26 +10,10 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "mem",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
-    hdrs = [
-        ":headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iport",
-        "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts",
-    ],
-    defines = ["GDAL_COMPILATION"],
 )

@@ -3,17 +3,8 @@ package(default_visibility = ["//:__subpackages__"])
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 filegroup(
-    name = "headers",
+    name = "frmts",
     srcs = glob([
-        "*.h",
-        "*.hpp",
-    ]),
-)
-
-filegroup(
-    name = "geojson",
-    srcs = glob([
-        "*.c",
         "*.cpp",
     ]),
 )

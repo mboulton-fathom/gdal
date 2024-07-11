@@ -10,34 +10,10 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "generic",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
-    hdrs = [
-        ":headers",
-        "//apps:headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//ogr/ogrsf_frmts/geojson/libjson:headers",
-        "//ogr/ogrsf_frmts/mem:headers",
-        "//ogr/ogrsf_frmts/mitab:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iogr",
-        "-Iapps",
-        "-I.",
-        "-Iogr/ogrsf_frmts",
-        "-Iogr/ogrsf_frmts/geojson/libjson",
-        "-Iogr/ogrsf_frmts/mitab",
-        "-Iport",
-        "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-    ],
-    defines = ["GDAL_COMPILATION"],
 )

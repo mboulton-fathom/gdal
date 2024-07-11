@@ -27,15 +27,10 @@ filegroup(
     ],
 )
 
-cc_library(
+filegroup(
     name = "gcore",
-    srcs = glob(["*.c"]) + ["//ogr:headers"],
-    hdrs = [
-        ":headers",
-    ],
-    copts = [
-        "-Iogr",
-        "-I$(GENDIR)/gcore",
-    ],
-    includes = ["."],
+    srcs = glob([
+        "*.c",
+        "*.cpp",
+    ]),
 )

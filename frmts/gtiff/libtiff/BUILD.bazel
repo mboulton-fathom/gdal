@@ -10,22 +10,10 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "libtiff",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
-    hdrs = [
-        ":headers",
-        "//gcore:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iport",
-        "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-    ],
-    defines = ["GDAL_COMPILATION"],
 )

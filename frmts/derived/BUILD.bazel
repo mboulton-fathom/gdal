@@ -11,15 +11,9 @@ filegroup(
 )
 
 filegroup(
-    name = "ogr",
-    srcs = glob(
-        [
-            "*.c",
-            "*.cpp",
-        ],
-        exclude = [
-            "ogr_capi_test.c",
-            "test_geo_utils.cpp",
-        ],
-    ),
+    name = "derived",
+    srcs = glob([
+        "*.c",
+        "*.cpp",
+    ]),
 )

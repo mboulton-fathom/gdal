@@ -15,8 +15,11 @@ cc_library(
     name = "argparse",
     srcs = [
         "gdalargumentparser.cpp",
+    ],
+    hdrs = [
         ":headers",
         "//alg:headers",
+        "//apps/argparse:headers",
         "//frmts/gtiff:headers",
         "//frmts/vrt:headers",
         "//gcore:headers",
@@ -31,10 +34,11 @@ cc_library(
     ],
     copts = [
         "-Ignm",
-        "-I.",
+        "-Iapps/argparse",
         "-Igcore",
         "-Iport",
         "-I$(GENDIR)/port",
+        "-I$(GENDIR)/gcore",
         "-Ialg",
         "-Iogr",
         "-Iogr/ogrsf_frmts",
@@ -47,19 +51,13 @@ cc_library(
     ],
     defines = ["GDAL_COMPILATION"],
     deps = [
-        "//apps/argparse",
-        "//gcore",
+        "//:gdal_core",
     ],
 )
 
 gdal_app(
     name = "gdalinfo",
-    extra_deps = [
-        "//ogr/ogrsf_frmts/geojson",
-        "//frmts/gtiff",
-    ],
-    extra_srcs = [
+    srcs = [
         ":gdalinfo_bin.cpp",
-        "gdalinfo_lib.cpp",
     ],
 )

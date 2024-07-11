@@ -1,9 +1,14 @@
 package(default_visibility = ["//:__subpackages__"])
 
 filegroup(
-    name = "fast_float",
+    name = "headers",
     srcs = glob(
         ["*.h"],
         allow_empty = False,
     ),
+)
+
+filegroup(
+    name = "fast_float",
+    srcs = [":headers"],
 )

@@ -5,6 +5,10 @@ build --host_cxxopt='-std=c++17'
 build --cxxopt='-fdiagnostics-color=always'
 build --host_cxxopt='-fdiagnostics-color=always'
 
+build:lto --strip=always
+build:lto --copt=-flto=thin
+build:lto --cxxopt=-flto=thin
+build:lto --linkopt=-flto=thin
 
 build --incompatible_strict_action_env
 build --noincompatible_remote_symlinks

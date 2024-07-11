@@ -1,9 +1,14 @@
 package(default_visibility = ["//:__subpackages__"])
 
 filegroup(
-    name = "marching_squares",
+    name = "headers",
     srcs = glob(
         ["*.h"],
         allow_empty = False,
     ),
+)
+
+filegroup(
+    name = "marching_squares",
+    srcs = [":headers"],
 )

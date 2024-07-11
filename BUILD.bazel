@@ -1,0 +1,66 @@
+package(default_visibility = ["//:__subpackages__"])
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+DEP_FOLDERS = [
+    "alg",
+    "alg/internal_libqhull",
+    "alg/marching_squares",
+    "frmts/derived",
+    "frmts/gtiff",
+    "frmts/gtiff/libgeotiff",
+    "frmts/gtiff/libtiff",
+    "frmts/mem",
+    "frmts/hfa",
+    "frmts/vrt",
+    "frmts/zlib",
+    "gcore",
+    "gcore/mdreader",
+    "gnm",
+    "gnm/gnm_frmts",
+    "ogr",
+    "ogr/ogrsf_frmts",
+    "ogr/ogrsf_frmts/generic",
+    "ogr/ogrsf_frmts/mem",
+    "ogr/ogrsf_frmts/geojson",
+    "ogr/ogrsf_frmts/kml",
+    "ogr/ogrsf_frmts/geojson/libjson",
+    "ogr/ogrsf_frmts/mitab",
+    "port",
+    "third_party/LercLib",
+    "third_party/fast_float",
+]
+
+cc_library(
+    name = "gdal_core",
+    srcs = [
+        "//{}".format(d)
+        for d in DEP_FOLDERS
+    ] + ["//frmts"],
+    hdrs = [
+        "//{}:headers".format(d)
+        for d in DEP_FOLDERS
+    ] + [
+        "//alg:polygonize_polygonizer.cpp",
+        "//apps:headers",
+    ],
+    copts = [
+        "-I{}".format(d)
+        for d in DEP_FOLDERS
+    ] + [
+        "-I$(GENDIR)/port",
+        "-I$(GENDIR)/gcore",
+        "-Iapps",
+    ],
+    defines = [
+        "GDAL_COMPILATION",
+        "HAVE_LIBZ",
+        "HAVE_SSE_AT_COMPILE_TIME",
+        "CPL_LSB=1",
+    ],
+    deps = [
+        "@curl",
+        "@proj",
+        "@sqlite3",
+    ],
+)

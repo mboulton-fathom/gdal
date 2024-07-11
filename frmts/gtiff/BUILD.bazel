@@ -10,7 +10,7 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "gtiff",
     srcs = glob(
         [
@@ -22,32 +22,7 @@ cc_library(
             "*quant*",
         ],
     ) + [
-        "//port:cpl_md5.cpp",
-    ],
-    hdrs = [
         ":headers",
-        "//alg:headers",
-        "//apps:headers",
-        "//gcore:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//port:headers",
-    ],
-    copts = [
-        "-Iogr",
-        "-Ialg",
-        "-Iapps",
-        "-Iogr/ogrsf_frmts",
-        "-Iport",
-        "-I$(GENDIR)/port",
-        "-Igcore",
-        "-I$(GENDIR)/gcore",
-        "-Ifrmts/gtiff/libtiff",
-        "-Ifrmts/gtiff/libgeotiff",
-    ],
-    defines = ["GDAL_COMPILATION"],
-    deps = [
-        "//frmts/gtiff/libgeotiff",
-        "//frmts/gtiff/libtiff",
+        #        "//port:cpl_md5.cpp",
     ],
 )

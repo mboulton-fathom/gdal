@@ -10,22 +10,10 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "libjson",
     srcs = glob([
         "*.c",
         "*.cpp",
     ]),
-    hdrs = [
-        ":headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//ogr/ogrsf_frmts/mem:headers",
-        "//port",
-    ],
-    copts = [
-        "-Iogr/ogrsf_frmts",
-        "-Iport",
-        "-I$(GENDIR)/port",
-    ],
-    deps = ["//port"],
 )

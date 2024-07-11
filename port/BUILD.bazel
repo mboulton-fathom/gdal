@@ -41,41 +41,20 @@ filegroup(
         exclude = ["cpl_odbc.h"],
     ) + [
         ":cpl_config_generate",
-        "//third_party/fast_float",
     ],
 )
 
-cc_library(
+filegroup(
     name = "port",
     srcs = glob(
         ["*.cpp"],
         exclude = [
             "*win32.cpp",
             "cpl_odbc.cpp",
+            #            "cpl_vsil_gzip.cpp",
+            #            "cpl_minizip_ioapi.cpp",
+            #            "cpl_minizip_unzip.cpp",
+            #            "cpl_minizip_zip.cpp",
         ],
     ),
-    hdrs = [
-        ":headers",
-        "//ogr/ogrsf_frmts/geojson/libjson:headers",
-    ],
-    copts = [
-        "-Ifrmts/zlib",
-        "-Iogr",
-        "-Iogr/ogrsf_frmts/geojson/libjson",
-        "-I.",
-        "-I$(GENDIR)/port",
-    ],
-    defines = [
-        "GDAL_COMPILATION",
-        "HAVE_LIBZ",
-    ],
-    includes = [
-        "$(GENDIR)/port",
-    ],
-    local_defines = [
-        "CPL_LSB=1",
-    ],
-    deps = [
-        "//frmts/zlib",
-    ],
 )
