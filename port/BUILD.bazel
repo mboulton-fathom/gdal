@@ -27,6 +27,7 @@ expand_template_rule(
         "@CPL_CONFIG_EXTRAS@": "",
         "HAVE_DIRECT_H 1": "_HAVE_DIRECT_H 0",
         "HAVE_XLOCALE_H 1": "_HAVE_XLOCALE_H 0",
+        "WORDS_BIGENDIAN 1": "_WORDS_BIGENDIAN 0",
     },
     template = "//cmake/template:cpl_config_template",
 )

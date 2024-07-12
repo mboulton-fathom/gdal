@@ -12,16 +12,30 @@ bazel_dep(name = "rules_cc", version = "0.0.9")
 bazel_dep(name = "curl", version = "8.8.0")
 bazel_dep(name = "sqlite3", version = "3.42.0.bcr.1")
 bazel_dep(name = "proj", version = "0.0.1")
-git_override(
+
+#git_override(
+#    module_name = "proj",
+#    commit = "4907bd7eddf8001b850b3bafab817a8ff06ccb88",
+#    remote = "https://github.com/mboulton-fathom/PROJ.git",
+#)
+
+local_path_override(
     module_name = "proj",
-    commit = "4907bd7eddf8001b850b3bafab817a8ff06ccb88",
-    remote = "https://github.com/mboulton-fathom/PROJ.git",
+    path = "../PROJ",
 )
 
-#local_path_override(
-#    module_name = "proj",
-#    path = "../PROJ",
-#)
+bazel_dep(name = "libdeflate", version = "1.20.bcr.1")
+archive_override(
+    module_name = "libdeflate",
+    integrity = "sha256-7RRUFmzteJE/84CYcKQAW3Fwpv0wdn3EeKCbloR7nCo=",
+    patches = [
+        "//third_party/deflate:module_dot_bazel.patch",
+        "//third_party/deflate:add_build_file.patch",
+    ],
+    strip_prefix = "libdeflate-1.20",
+    urls = ["https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.20.tar.gz"],
+)
+
 ## TODO python
 # bazel_dep(name = "rules_python", version = "0.33.2")
 # bazel_dep(name = "rules_python_gazelle_plugin", version = "0.33.2")

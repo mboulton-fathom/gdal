@@ -34,3 +34,8 @@ filegroup(
         "*.cpp",
     ]),
 )
+
+filegroup(
+    name = "data",
+    srcs = glob(["data/*.json"]),
+)
