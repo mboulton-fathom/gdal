@@ -68,3 +68,10 @@ gdal_app(
         ":gdallocationinfo.cpp",
     ],
 )
+
+gdal_app(
+    name = "gdalwarp",
+    srcs = [
+        ":gdalwarp_bin.cpp",
+    ],
+)
