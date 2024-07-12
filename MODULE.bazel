@@ -15,7 +15,7 @@ bazel_dep(name = "proj", version = "0.0.1")
 
 #git_override(
 #    module_name = "proj",
-#    commit = "4907bd7eddf8001b850b3bafab817a8ff06ccb88",
+#    commit = "e0c35b8afc143e9ae785b75f02ec826f0cfb0f6e",
 #    remote = "https://github.com/mboulton-fathom/PROJ.git",
 #)
 
