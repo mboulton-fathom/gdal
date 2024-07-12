@@ -12,17 +12,16 @@ bazel_dep(name = "rules_cc", version = "0.0.9")
 bazel_dep(name = "curl", version = "8.8.0")
 bazel_dep(name = "sqlite3", version = "3.42.0.bcr.1")
 bazel_dep(name = "proj", version = "0.0.1")
-
-#git_override(
-#    module_name = "proj",
-#    commit = "e0c35b8afc143e9ae785b75f02ec826f0cfb0f6e",
-#    remote = "https://github.com/mboulton-fathom/PROJ.git",
-#)
-
-local_path_override(
+git_override(
     module_name = "proj",
-    path = "../PROJ",
+    commit = "e0c35b8afc143e9ae785b75f02ec826f0cfb0f6e",
+    remote = "https://github.com/mboulton-fathom/PROJ.git",
 )
+
+#local_path_override(
+#    module_name = "proj",
+#    path = "../PROJ",
+#)
 
 bazel_dep(name = "libdeflate", version = "1.20.bcr.1")
 archive_override(
