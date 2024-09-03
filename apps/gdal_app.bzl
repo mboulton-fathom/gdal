@@ -109,4 +109,5 @@ def gdal_app(*, name, srcs, deps = [], linkopts = []):
     _wrapped_gdal_binary(
         name = name,
         tool = raw_name,
+        visibility = ["//visibility:public"],
     )
