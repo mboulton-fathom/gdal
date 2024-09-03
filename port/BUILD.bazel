@@ -28,6 +28,9 @@ expand_template_rule(
         "HAVE_DIRECT_H 1": "_HAVE_DIRECT_H 0",
         "HAVE_XLOCALE_H 1": "_HAVE_XLOCALE_H 0",
         "WORDS_BIGENDIAN 1": "_WORDS_BIGENDIAN 0",
+
+        # darwinonly
+        #        "HAVE_SCHED_GETAFFINITY 1": "_HAVE_SCHED_GETAFFINITY 1",
     },
     template = "//cmake/template:cpl_config_template",
 )

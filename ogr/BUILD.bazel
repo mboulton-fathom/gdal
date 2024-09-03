@@ -20,6 +20,7 @@ filegroup(
         exclude = [
             "ogr_capi_test.c",
             "test_geo_utils.cpp",
+            "generate_encoding_table.c"
         ],
     ),
 )
