@@ -1,7 +1,6 @@
 module(
     name = "gdal",
     version = "0.0.1",
-    repo_name = "com_github_osgeo_gdal",
 )
 
 bazel_dep(name = "buildozer", version = "7.1.2")

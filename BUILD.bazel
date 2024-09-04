@@ -2,6 +2,7 @@ package(default_visibility = ["//:__subpackages__"])
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
+# Dependencies for apps
 DEP_FOLDERS = [
     "alg",
     "alg/internal_libqhull",
@@ -43,14 +44,6 @@ cc_library(
         "//alg:polygonize_polygonizer.cpp",
         "//apps:headers",
     ],
-    copts = [
-        "-I{}".format(d)
-        for d in DEP_FOLDERS
-    ] + [
-        "-I$(GENDIR)/port",
-        "-I$(GENDIR)/gcore",
-        "-Iapps",
-    ],
     defines = [
         "GDAL_COMPILATION",
         "HAVE_LIBZ",
@@ -62,9 +55,14 @@ cc_library(
         "FRMT_vrt",
         "FRMT_mem",
     ],
+    includes = DEP_FOLDERS + [
+        "$(GENDIR)/gcore",
+        "$(GENDIR)/port",
+        "apps",
+    ],
     deps = [
         "@curl",
-        "@libdeflate",
+        "@libdeflate_with_gzip",
         "@proj",
         "@sqlite3",
         "@zlib",

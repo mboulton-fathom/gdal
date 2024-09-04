@@ -1,7 +1,7 @@
 package(default_visibility = ["//:__subpackages__"])
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("//apps:gdal_app.bzl", "ALL_INCLUDES", "gdal_app")
+load("//apps:gdal_app.bzl", "gdal_app")
 
 filegroup(
     name = "headers",
@@ -19,22 +19,11 @@ cc_library(
         "commonutils.cpp",
         "gdalargumentparser.cpp",
         "nearblack_lib_floodfill.cpp",
-        "//alg:headers",
+    ],
+    hdrs = [
         "//apps:headers",
         "//apps/argparse:headers",
-        "//frmts/gtiff:headers",
-        "//frmts/vrt:headers",
-        "//gcore:headers",
-        "//gnm:headers",
-        "//ogr:headers",
-        "//ogr/ogrsf_frmts:headers",
-        "//ogr/ogrsf_frmts/generic:headers",
-        "//ogr/ogrsf_frmts/geojson:headers",
-        "//ogr/ogrsf_frmts/geojson/libjson:headers",
-        "//ogr/ogrsf_frmts/mem:headers",
-        "//port:headers",
     ],
-    copts = ALL_INCLUDES,
     defines = ["GDAL_COMPILATION"],
     deps = [
         "//:gdal_core",

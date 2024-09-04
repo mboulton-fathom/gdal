@@ -73,24 +73,6 @@ _wrapped_gdal_binary = rule(
     executable = True,
 )
 
-ALL_INCLUDES = [
-    "-Ignm",
-    "-Iapps/argparse",
-    "-Igcore",
-    "-I$(GENDIR)/gcore",
-    "-Iport",
-    "-I$(GENDIR)/port",
-    "-Ialg",
-    "-Iogr",
-    "-Iogr/ogrsf_frmts",
-    "-Iogr/ogrsf_frmts/mem",
-    "-Iogr/ogrsf_frmts/geojson",
-    "-Iogr/ogrsf_frmts/generic",
-    "-Iogr/ogrsf_frmts/geojson/libjson",
-    "-Ifrmts/vrt",
-    "-Ifrmts/gtiff",
-]
-
 def gdal_app(*, name, srcs, deps = [], linkopts = []):
     raw_name = "_{}".format(name)
 
@@ -99,9 +81,7 @@ def gdal_app(*, name, srcs, deps = [], linkopts = []):
         linkopts = linkopts,
         srcs = srcs,
         defines = ["GDAL_COMPILATION"],
-        copts = ALL_INCLUDES,
         deps = deps + [
-            "//:gdal_core",
             "//apps",
         ],
     )
