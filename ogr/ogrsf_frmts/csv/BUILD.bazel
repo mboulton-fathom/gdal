@@ -1,0 +1,21 @@
+package(default_visibility = ["//:__subpackages__"])
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+filegroup(
+    name = "headers",
+    srcs = glob([
+        "*.h",
+        "*.hpp",
+    ]),
+)
+
+filegroup(
+    name = "csv",
+    srcs = glob(
+        [
+            "*.c",
+            "*.cpp",
+        ],
+    ),
+)

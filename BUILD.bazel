@@ -24,6 +24,7 @@ DEP_FOLDERS = [
     "ogr/ogrsf_frmts/mem",
     "ogr/ogrsf_frmts/geojson",
     "ogr/ogrsf_frmts/kml",
+    "ogr/ogrsf_frmts/csv",
     "ogr/ogrsf_frmts/geojson/libjson",
     "ogr/ogrsf_frmts/mitab",
     "port",

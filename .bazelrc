@@ -29,3 +29,6 @@ build --reuse_sandbox_directories
 build --nolegacy_external_runfiles
 
 try-import %workspace%/.bazelrc.user
+
+common --registry=https://bcr.bazel.build
+common --registry=file://%workspace%/../fathom_api/bzlmod-registry
