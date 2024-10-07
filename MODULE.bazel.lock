@@ -25,6 +25,7 @@
     "https://bcr.bazel.build/modules/curl/8.8.0/source.json": "d7d138b6878cf38891692fee0649ace35357fd549b425614d571786f054374d4",
     "https://bcr.bazel.build/modules/googletest/1.11.0/MODULE.bazel": "3a83f095183f66345ca86aa13c58b59f9f94a2f81999c093d4eeaa2d262d12f4",
     "https://bcr.bazel.build/modules/googletest/1.11.0/source.json": "c73d9ef4268c91bd0c1cd88f1f9dfa08e814b1dbe89b5f594a9f08ba0244d206",
+    "https://bcr.bazel.build/modules/libdeflate_with_gzip/1.21.gdalregistry.1/MODULE.bazel": "not found",
     "https://bcr.bazel.build/modules/mbedtls/3.6.0/MODULE.bazel": "8e380e4698107c5f8766264d4df92e36766248447858db28187151d884995a09",
     "https://bcr.bazel.build/modules/mbedtls/3.6.0/source.json": "1dbe7eb5258050afcc3806b9d43050f71c6f539ce0175535c670df606790b30c",
     "https://bcr.bazel.build/modules/platforms/0.0.10/MODULE.bazel": "8cb8efaf200bdeb2150d93e162c40f388529a25852b332cec879373771e48ed5",
