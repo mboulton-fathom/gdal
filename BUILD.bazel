@@ -25,6 +25,7 @@ DEP_FOLDERS = [
     "ogr/ogrsf_frmts/geojson",
     "ogr/ogrsf_frmts/kml",
     "ogr/ogrsf_frmts/csv",
+    "ogr/ogrsf_frmts/vrt",
     "ogr/ogrsf_frmts/geojson/libjson",
     "ogr/ogrsf_frmts/mitab",
     "port",
@@ -52,9 +53,15 @@ cc_library(
         "HAVE_LIBDEFLATE",
         "ZIP_SUPPORT",
         "CPL_LSB=1",
+        # Gdal drivers
         "FRMT_gtiff",
         "FRMT_vrt",
         "FRMT_mem",
+        # OGR drivers
+        "CSV_ENABLED",
+        "MEM_ENABLED",
+        "KML_ENABLED",
+        "VRT_ENABLED",
     ],
     includes = DEP_FOLDERS + [
         "$(GENDIR)/gcore",
