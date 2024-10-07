@@ -57,3 +57,10 @@ gdal_app(
         ":gdal_translate_bin.cpp",
     ],
 )
+
+gdal_app(
+    name = "ogr2ogr",
+    srcs = [
+        ":ogr2ogr_bin.cpp",
+    ],
+)
