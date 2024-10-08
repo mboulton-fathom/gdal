@@ -39,24 +39,23 @@ int main(int argc, char **argv)
     }
     next_argv.push_back(nullptr);
 
-    std::vector<char *const> envp{};
-    auto gdal_env = fmt::format("GDAL_DATA={}", gdal_data_path);
-    envp.push_back(const_cast<char *const>(gdal_env.c_str()));
-    auto proj_env = fmt::format("PROJ_DATA={}", proj_data_path);
-    envp.push_back(const_cast<char *const>(proj_env.c_str()));
+    std::vector<std::string> envp_strings{};
+    envp_strings.push_back(fmt::format("GDAL_DATA={}", gdal_data_path));
+    envp_strings.push_back(fmt::format("PROJ_DATA={}", proj_data_path));
 
     for (auto elem : runfiles->EnvVars())
     {
-        auto env_var = fmt::format("{}={}", elem.first, elem.second);
-        std::cout << env_var << std::endl;
-        envp.push_back(const_cast<char *const>(env_var.c_str()));
+        envp_strings.push_back(fmt::format("{}={}", elem.first, elem.second));
+    }
+
+    std::vector<char *const> envp{};
+    for (auto elem : envp_strings)
+    {
+        envp.push_back(const_cast<char *const>(elem.c_str()));
     }
     envp.push_back(nullptr);
 
-    for (auto elem : envp){
-        std::cout << elem << std::endl;
-    }
-
     auto retcode = execve(argv[1], next_argv.data(), envp.data());
+
     return retcode;
 }
