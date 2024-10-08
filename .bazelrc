@@ -5,6 +5,11 @@ build --host_cxxopt='-std=c++17'
 build --cxxopt='-fdiagnostics-color=always'
 build --host_cxxopt='-fdiagnostics-color=always'
 
+build --noincompatible_sandbox_hermetic_tmp
+build --sandbox_add_mount_pair=/tmp
+build -c fastbuild
+common --incompatible_use_plus_in_repo_names
+
 build:lto --strip=always
 build:lto --copt=-flto=thin
 build:lto --cxxopt=-flto=thin

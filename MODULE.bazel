@@ -3,6 +3,7 @@ module(
     version = "0.0.1",
 )
 
+bazel_dep(name = "fmt", version = "11.0.2")
 bazel_dep(name = "buildozer", version = "7.1.2")
 bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "aspect_bazel_lib", version = "2.7.8")
@@ -48,3 +49,13 @@ bazel_dep(name = "libdeflate_with_gzip", version = "1.21.gdalregistry.1")
 #     requirements_lock = "//python:requirements.txt",
 # )
 # use_repo(pip, "pip")
+
+# For C++ dev
+# Run every so often:
+#  bazel run @hedron_compile_commands//:refresh_all
+bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+git_override(
+    module_name = "hedron_compile_commands",
+    commit = "0e990032f3c5a866e72615cf67e5ce22186dcb97",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
+)

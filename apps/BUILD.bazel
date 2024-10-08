@@ -1,7 +1,14 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_binary")
 load("//apps:gdal_app.bzl", "gdal_app")
+
+cc_binary(
+    name = "app_wrapper",
+      deps = ["@bazel_tools//tools/cpp/runfiles", "@fmt"],
+    data=["//gcore:data","@proj//data"],
+    srcs = [":gdal_app.cpp"],
+)
 
 filegroup(
     name = "headers",
