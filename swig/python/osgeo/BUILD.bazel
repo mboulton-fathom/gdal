@@ -4,6 +4,7 @@ _modules = [
     "gdal",
     "gdalconst",
     "ogr",
+    # "gdal_array",
     "gnm",
     "osr",
 ]
@@ -30,4 +31,14 @@ py_library(
     srcs = [
         "__init__.py",
     ] + _modules,
+)
+
+cc_library(
+    name = "osgeo_cpp",
+    srcs = _modules,
+    deps = [
+        "//:gdal_core",
+        # See https://github.com/bazelbuild/rules_python/issues/824
+        "@rules_python//python/cc:current_py_cc_headers",
+    ],
 )

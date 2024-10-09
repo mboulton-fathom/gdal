@@ -20,11 +20,11 @@ git_override(
     remote = "https://github.com/mboulton-fathom/PROJ.git",
 )
 
+bazel_dep(name = "rules_python", version = "0.36.0")
 bazel_dep(name = "libdeflate_with_gzip", version = "1.21.gdalregistry.1")
 bazel_dep(name = "swig", version = "4.2.0")
 
 ## TODO python
-# bazel_dep(name = "rules_python", version = "0.33.2")
 # bazel_dep(name = "rules_python_gazelle_plugin", version = "0.33.2")
 # bazel_dep(name = "aspect_rules_py", version = "0.7.3")
 #
