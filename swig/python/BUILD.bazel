@@ -7,6 +7,9 @@ gen_swig_python(
     ],
     module_name = "osgeo",
     py_module_name = "osgeo",
-    swig_includes = ["//swig:swig_includes"],
+    swig_includes = [
+        "//swig:swig_includes",
+        "//swig/include/python:includes",
+    ],
     deps = ["//:gdal_core"],
 )

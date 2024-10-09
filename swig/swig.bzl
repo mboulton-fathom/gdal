@@ -1,6 +1,7 @@
 ## https://github.com/tensorflow/tensorflow/blob/v0.6.0/tensorflow/tensorflow.bzl
 
 load("@bazel_skylib//lib:sets.bzl", "sets")
+load("@bazel_skylib//lib:paths.bzl", "paths")
 
 # Bazel rules for building swig files.
 def gen_swig_python_impl(ctx):
@@ -12,7 +13,10 @@ def gen_swig_python_impl(ctx):
     py_out = ctx.actions.declare_directory(ctx.attr.name + ".pyout")
     args = ["-c++", "-python"]
     args += ["-module", module_name]
-    args += ["-l" + f.path for f in ctx.files.swig_includes]
+
+    #    args += ["-l" + f.path for f in ctx.files.swig_includes]
+    includes_folders = sets.make([paths.dirname(f.path) for f in ctx.files.swig_includes + ctx.files._swig_deps])
+    args += ["-I" + d for d in sets.to_list(includes_folders)]
     cc_include_dirs = sets.make()
     cc_includes = sets.make()
     for dep in ctx.attr.deps:
@@ -30,7 +34,7 @@ def gen_swig_python_impl(ctx):
         inputs = ctx.files.srcs +
                  sets.to_list(cc_includes) +
                  ctx.files.swig_includes +
-                 ctx.files.swig_deps,
+                 ctx.files._swig_deps,
         outputs = outputs,
         progress_message = "SWIGing",
     )
@@ -51,7 +55,7 @@ gen_swig_python = rule(
             allow_files = True,
             providers = [CcInfo],
         ),
-        "swig_deps": attr.label_list(
+        "_swig_deps": attr.label_list(
             default = [
                 "@swig//:lib_python",
             ],

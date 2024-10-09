@@ -6,3 +6,16 @@ exports_files(
         allow_empty = False,
     ),
 )
+
+filegroup(
+    name = "includes",
+    srcs = glob(
+        ["docs/*i"],
+        allow_empty = False,
+    ) + [
+        "callback.i",
+        "python_exceptions.i",
+        "python_strings.i",
+        "typemaps_python.i",
+    ],
+)
