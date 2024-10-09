@@ -9,23 +9,29 @@ def gen_swig_python_impl(ctx):
         fail("Exactly one SWIG source file label must be specified.", "srcs")
 
     module_name = ctx.attr.module_name
-    cc_out = ctx.actions.declare_directory(ctx.attr.name + ".cout")
-    py_out = ctx.actions.declare_directory(ctx.attr.name + ".pyout")
+    cc_out = ctx.actions.declare_file(ctx.attr.name + ".cpp")
+    py_out = ctx.actions.declare_file(ctx.attr.name + ".py")
     args = ["-c++", "-python"]
     args += ["-module", module_name]
 
-    #    args += ["-l" + f.path for f in ctx.files.swig_includes]
-    includes_folders = sets.make([paths.dirname(f.path) for f in ctx.files.swig_includes + ctx.files._swig_deps])
-    args += ["-I" + d for d in sets.to_list(includes_folders)]
+    includes_folders = sets.to_list(sets.make([paths.dirname(f.path) for f in ctx.files.swig_includes + ctx.files._swig_deps]))
+
+    # Reverse them because we want the specific python ones ot be included first
+    includes_folders = includes_folders[::-1]
+    args += ["-I" + d for d in includes_folders]
+
+    # Add any C header deps
     cc_include_dirs = sets.make()
     cc_includes = sets.make()
     for dep in ctx.attr.deps:
         cc_include_dirs = sets.union(cc_include_dirs, sets.make([h.dirname for h in dep[CcInfo].compilation_context.headers.to_list()]))
         cc_includes = sets.union(cc_includes, sets.make(dep[CcInfo].compilation_context.headers.to_list()))
     args += ["-I" + x for x in sets.to_list(cc_include_dirs)]
+
     args += ["-o", cc_out.path]
     args += ["-outdir", py_out.dirname]
     args += [src.path for src in ctx.files.srcs]
+
     outputs = [cc_out, py_out]
     ctx.actions.run(
         executable = ctx.executable.swig_binary,
@@ -38,6 +44,7 @@ def gen_swig_python_impl(ctx):
         outputs = outputs,
         progress_message = "SWIGing",
     )
+
     return [
         DefaultInfo(files = depset(direct = outputs)),
     ]
