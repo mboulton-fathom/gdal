@@ -1,0 +1,11 @@
+package(default_visibility = ["//:__subpackages__"])
+
+filegroup(
+    name = "swig_includes",
+    srcs = glob(
+        [
+            "include/*.i",
+        ],
+        allow_empty = False,
+    ),
+)
