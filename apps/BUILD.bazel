@@ -1,13 +1,16 @@
 package(default_visibility = ["//:__subpackages__"])
 
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_binary")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("//apps:gdal_app.bzl", "gdal_app")
 
-cc_binary(
-    name = "app_wrapper",
-      deps = ["@bazel_tools//tools/cpp/runfiles", "@fmt"],
-    data=["//gcore:data","@proj//data"],
-    srcs = [":gdal_app.cpp"],
+cc_library(
+    name = "app_wrapper_lib",
+    srcs = [":gdal_app_lib.cpp"],
+    visibility = ["//visibility:private"],
+    deps = [
+        "@bazel_tools//tools/cpp/runfiles",
+        "@fmt",
+    ],
 )
 
 filegroup(
@@ -20,9 +23,15 @@ filegroup(
 
 cc_library(
     name = "apps",
-    srcs = glob([
-        "*_lib.cpp",
-    ]) + [
+    srcs = glob(
+        [
+            "*_lib.cpp",
+        ],
+        exclude = [
+            "gdal_app.cpp",
+            "gdal_app_lib.cpp",
+        ],
+    ) + [
         "commonutils.cpp",
         "gdalargumentparser.cpp",
         "nearblack_lib_floodfill.cpp",

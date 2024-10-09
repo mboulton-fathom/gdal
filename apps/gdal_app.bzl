@@ -16,26 +16,9 @@ function alocation {
 def _wrapped_gdal_binary_impl(ctx):
     out_executable = ctx.actions.declare_file(ctx.attr.name + "_exec")
 
-    ctx.actions.write(
-        out_executable,
-        BASH_RLOCATION_FUNCTION + """
-        set -u -e
-        export GDAL_DATA="$(alocation $(dirname $(rlocation {gdal_data})))"
-        tar xf $(rlocation {proj_data})
-        export PROJ_DATA=data
-        $(rlocation {tool}) $@
-        """.format(
-            tool = to_rlocation_path(ctx, ctx.file.tool),
-            gdal_data = to_rlocation_path(ctx, ctx.files._gdal_data[0]),
-            proj_data = to_rlocation_path(ctx, ctx.files._proj_data[0]),
-        ),
-        is_executable = True,
-    )
+    ctx.actions.symlink(output = out_executable, target_file = ctx.file._wrapper)
 
-    runfiles = ctx.runfiles(files = ctx.files.tool + ctx.files._runfiles_lib + ctx.files._gdal_data + ctx.files._proj_data)
-
-    # propagate dependencies
-    runfiles = runfiles.merge(ctx.attr._runfiles_lib[DefaultInfo].default_runfiles)
+    runfiles = ctx.runfiles(files = ctx.files.tool + ctx.files._gdal_data + ctx.files._proj_data)
 
     default = DefaultInfo(
         executable = out_executable,
@@ -64,9 +47,10 @@ _wrapped_gdal_binary = rule(
             allow_files = True,
             default = "@proj//data",
         ),
-        "_runfiles_lib": attr.label(
-            allow_files = True,
-            default = "@bazel_tools//tools/bash/runfiles",
+        "_wrapper": attr.label(
+            allow_single_file = True,
+            cfg = "exec",
+            default = "//apps:app_wrapper",
         ),
     },
     doc = "wrap a gdal binary and set GDAL_ENV etc. properly",
@@ -84,10 +68,29 @@ def gdal_app(*, name, srcs, deps = [], linkopts = []):
         deps = deps + [
             "//apps",
         ],
+        visibility = ["//visibility:private"],
     )
 
-    _wrapped_gdal_binary(
+    cc_binary(
         name = name,
-        tool = raw_name,
+        srcs = [":gdal_app.cpp"],
+        data = [
+            "//gcore:data",
+            "@proj//data",
+            raw_name,
+        ],
+        defines = [
+            'GDAL_PROGRAM_NAME=\\"{}\\"'.format(name),
+        ],
+        deps = [
+            ":app_wrapper_lib",
+        ],
         visibility = ["//visibility:public"],
     )
+
+#
+#    _wrapped_gdal_binary(
+#        name = name,
+#        tool = raw_name,
+#        visibility = ["//visibility:public"],
+#    )
