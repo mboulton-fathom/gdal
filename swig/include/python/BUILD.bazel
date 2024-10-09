@@ -10,12 +10,10 @@ exports_files(
 filegroup(
     name = "includes",
     srcs = glob(
-        ["docs/*i"],
+        [
+            "docs/*i",
+            "*.i",
+        ],
         allow_empty = False,
-    ) + [
-        "callback.i",
-        "python_exceptions.i",
-        "python_strings.i",
-        "typemaps_python.i",
-    ],
+    ),
 )

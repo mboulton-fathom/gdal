@@ -23,7 +23,7 @@ def gen_swig_python_impl(ctx):
     # Add any C header deps
     cc_include_dirs = sets.make()
     cc_includes = sets.make()
-    for dep in ctx.attr.deps:
+    for dep in ctx.attr.cdeps:
         cc_include_dirs = sets.union(cc_include_dirs, sets.make([h.dirname for h in dep[CcInfo].compilation_context.headers.to_list()]))
         cc_includes = sets.union(cc_includes, sets.make(dep[CcInfo].compilation_context.headers.to_list()))
     args += ["-I" + x for x in sets.to_list(cc_include_dirs)]
@@ -58,7 +58,7 @@ gen_swig_python = rule(
         "swig_includes": attr.label_list(
             allow_files = True,
         ),
-        "deps": attr.label_list(
+        "cdeps": attr.label_list(
             allow_files = True,
             providers = [CcInfo],
         ),

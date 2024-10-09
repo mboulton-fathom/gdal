@@ -1,0 +1,22 @@
+package(default_visibility = ["//:__subpackages__"])
+
+sources = [
+    "gdal.i",
+    "gdalconst.i",
+    "gnm.i",
+    #    "ogr.i",
+    #    "osr.i",
+]
+
+filegroup(
+    name = "include",
+    srcs = glob(
+        [
+            "*.i",
+        ],
+        allow_empty = False,
+        exclude = sources,
+    ),
+)
+
+exports_files(sources)
