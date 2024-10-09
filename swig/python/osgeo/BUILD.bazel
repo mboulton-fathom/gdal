@@ -1,23 +1,32 @@
 load("//swig:swig.bzl", "gen_swig_python")
 
-gen_swig_python(
-    name = "gdal",
-    srcs = [
-        "//swig/include:gdal.i",
-    ],
-    cdeps = ["//:gdal_core"],
-    module_name = "gdal",
-    py_module_name = "gdal",
-    swig_includes = [
-        "//swig/include",
-        "//swig/include/python:includes",
-    ],
-)
+_modules = [
+    "gdal",
+    "gdalconst",
+    "ogr",
+    "osr",
+]
+
+[
+    gen_swig_python(
+        name = modname,
+        srcs = [
+            "//swig/include:{}.i".format(modname),
+        ],
+        cdeps = ["//:gdal_core"],
+        module_name = modname,
+        py_module_name = modname,
+        swig_includes = [
+            "//swig/include",
+            "//swig/include/python:includes",
+        ],
+    )
+    for modname in _modules
+]
 
 py_library(
     name = "osgeo",
     srcs = [
         "__init__.py",
-        ":gdal",
-    ],
+    ] + _modules,
 )
