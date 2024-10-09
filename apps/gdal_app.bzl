@@ -29,4 +29,5 @@ def gdal_app(*, name, deps = [], **kwargs):
         ],
         importpath = "github.com/mboulton-fathom/gdal/apps",
         deps = ["@rules_go//go/runfiles:go_default_library"],
+        visibility = ["//visibility:public"],
     )
