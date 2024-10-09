@@ -27,16 +27,15 @@ func run() error {
     if err != nil {
         return fmt.Errorf("runfiles.New(): %w", err)
     }
-    r = r.WithSourceRepo("gdal")
 
-    binPath, err := r.Rlocation(fmt.Sprintf("_main/apps/%s", WrappedBinary))
+    binPath, err := r.Rlocation(fmt.Sprintf("gdal+/apps/%s", WrappedBinary))
     if err != nil {
         return fmt.Errorf("%T.WithSourceRepo(): %w", r, err)
     }
 
     cmd := exec.Command(binPath, os.Args[1:]...)
     cmd.Env = append(cmd.Env, r.Env()...)
-    gdalData, err := r.Rlocation("_main/gcore/data")
+    gdalData, err := r.Rlocation("gcore/data")
     cmd.Env = append(cmd.Env, fmt.Sprintf("GDAL_DATA=%s", gdalData))
     projData, err := r.Rlocation("proj+/data")
     cmd.Env = append(cmd.Env, fmt.Sprintf("PROJ_DATA=%s", projData))
