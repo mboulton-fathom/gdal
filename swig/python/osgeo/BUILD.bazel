@@ -2,6 +2,8 @@ load("//swig:swig.bzl", "extract_numpy_headers", "gen_swig_python")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_library")
 
+package(default_visibility = ["//:__subpackages__"])
+
 _modules = [
     "gdal",
     "gdalconst",
@@ -55,5 +57,5 @@ py_library(
     deps = [
         "_{}".format(modname)
         for modname in _modules
-    ],
+    ] + ["//:gdal_core"],
 )
