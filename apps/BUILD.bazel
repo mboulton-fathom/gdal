@@ -74,4 +74,5 @@ gdal_app(
 alias(
     name = "gdal_calc.py",
     actual = "//swig/python/gdal-utils/osgeo_utils:gdal_calc",
+    visibility = ["//visibility:public"],
 )
