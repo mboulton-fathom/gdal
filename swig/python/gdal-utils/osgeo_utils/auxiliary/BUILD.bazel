@@ -10,6 +10,6 @@ py_library(
     ),
     deps = [
         "//swig/python/osgeo",
-        "@python_deps//numpy",
+        "@gdal_python_deps//numpy",
     ],
 )

@@ -35,13 +35,13 @@ python.toolchain(
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
-    hub_name = "python_deps",
+    hub_name = "gdal_python_deps",
     python_version = python_version,
     requirements_lock = "//:requirements.txt",
 )
 use_repo(
     pip,
-    "python_deps",
+    "gdal_python_deps",
 )
 
 # For C++ dev

@@ -42,7 +42,7 @@ def _extract_numpy_headers_impl(ctx):
 _extract_numpy_headers = rule(
     attrs = {
         "numpy": attr.label(
-            default = "@python_deps//numpy:whl",
+            default = "@gdal_python_deps//numpy:whl",
             allow_single_file = True,
             doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
         ),
@@ -128,7 +128,7 @@ _gen_swig_python = rule(
             ],
         ),
         "numpy": attr.label(
-            default = "@python_deps//numpy:whl",
+            default = "@gdal_python_deps//numpy:whl",
             allow_single_file = True,
             doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
         ),
