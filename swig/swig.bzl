@@ -79,6 +79,11 @@ gen_swig_python = rule(
                 "@swig//:lib_python",
             ],
         ),
+        "numpy": attr.label(
+            default = "@python_deps//numpy:whl",
+            allow_single_file = True,
+            doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
+        ),
         "module_name": attr.string(mandatory = True),
         "py_module_name": attr.string(mandatory = True),
         "swig_binary": attr.label(

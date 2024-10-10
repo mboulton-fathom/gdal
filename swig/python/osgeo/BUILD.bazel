@@ -4,7 +4,7 @@ _modules = [
     "gdal",
     "gdalconst",
     "ogr",
-    # "gdal_array",
+    "gdal_array",
     "gnm",
     "osr",
 ]
