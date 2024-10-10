@@ -143,7 +143,7 @@ static int _UserHasSpecifiedIfUsingExceptions()
 
 static int bReturnSame = 1;
 
-static void NeverCallMePlease() {
+void NeverCallMePlease() {
     bReturnSame = 0;
 }
 

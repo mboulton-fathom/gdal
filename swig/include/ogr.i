@@ -4591,7 +4591,7 @@ OGRDriverShadow* GetDriver(int driver_number) {
 %}
 #else
 %inline %{
-  static char **GeneralCmdLineProcessor( char **papszArgv, int nOptions = 0 ) {
+  char **GeneralCmdLineProcessor( char **papszArgv, int nOptions = 0 ) {
     int nResArgCount;
 
     if( papszArgv == NULL )
