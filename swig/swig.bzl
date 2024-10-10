@@ -168,7 +168,10 @@ def swig_python_bindings(*, module_names):
             name = "_{}_lib".format(modname),
             srcs = [modname],
             hdrs = [":numpy_headers"],
-            copts = ["-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy"],
+            copts = [
+                "-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy",
+                "-I$(GENDIR)/external/gdal+/swig/python/osgeo/numpy_headers.numpy",
+            ],
             deps = [
                 "//:gdal_core",
                 "//apps",
