@@ -1,5 +1,4 @@
-load("//swig:swig.bzl", "extract_numpy_headers", "gen_swig_python")
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//swig:swig.bzl", "swig_python_bindings")
 load("@rules_python//python:defs.bzl", "py_library")
 
 package(default_visibility = ["//:__subpackages__"])
@@ -13,48 +12,16 @@ _modules = [
     "osr",
 ]
 
-[
-    gen_swig_python(
-        name = modname,
-        srcs = [
-            "//swig/include:{}.i".format(modname),
-        ],
-        cdeps = ["//:gdal_core"],
-        module_name = modname,
-        py_module_name = modname,
-        swig_includes = [
-            "//swig/include",
-            "//swig/include/python:includes",
-        ],
-    )
-    for modname in _modules
-]
-
-extract_numpy_headers(
-    name = "numpy_headers",
+swig_python_bindings(
+    module_names = _modules,
 )
-
-[
-    cc_library(
-        name = "_{}".format(modname),
-        srcs = [modname],
-        hdrs = [":numpy_headers"],
-        copts = ["-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy"],
-        deps = [
-            "//:gdal_core",
-            # See https://github.com/bazelbuild/rules_python/issues/824
-            "@rules_python//python/cc:current_py_cc_headers",
-        ],
-    )
-    for modname in _modules
-]
 
 py_library(
     name = "osgeo",
     srcs = [
         "__init__.py",
     ] + _modules,
-    deps = [
+    data = [
         "_{}".format(modname)
         for modname in _modules
     ] + ["//:gdal_core"],

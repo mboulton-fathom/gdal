@@ -1,10 +1,12 @@
 ## https://github.com/tensorflow/tensorflow/blob/v0.6.0/tensorflow/tensorflow.bzl
 
+load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory_bin_action")
+load("@rules_cc//cc:defs.bzl", "cc_import", "cc_library")
 
-def _extract_numpy_headers(ctx):
+def _extract_numpy_headers_impl(ctx):
     """extracts numpy wheel and gets the headers"""
 
     extracted = ctx.actions.declare_directory(ctx.attr.name + ".extracted")
@@ -30,14 +32,14 @@ def _extract_numpy_headers(ctx):
         executable = copy_directory_bin,
         arguments = args,
         mnemonic = "CopyDirectory",
-        progress_message = "Copying directory ",
+        progress_message = "Copying directory",
     )
 
     return [
         DefaultInfo(files = depset(direct = [out_folder])),
     ]
 
-extract_numpy_headers = rule(
+_extract_numpy_headers = rule(
     attrs = {
         "numpy": attr.label(
             default = "@python_deps//numpy:whl",
@@ -45,7 +47,7 @@ extract_numpy_headers = rule(
             doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
         ),
     },
-    implementation = _extract_numpy_headers,
+    implementation = _extract_numpy_headers_impl,
     toolchains = ["@aspect_bazel_lib//lib:copy_directory_toolchain_type"],
 )
 
@@ -107,7 +109,7 @@ def gen_swig_python_impl(ctx):
         DefaultInfo(files = depset(direct = [cc_out, py_out])),
     ]
 
-gen_swig_python = rule(
+_gen_swig_python = rule(
     attrs = {
         "srcs": attr.label_list(
             mandatory = True,
@@ -141,3 +143,54 @@ gen_swig_python = rule(
     },
     implementation = gen_swig_python_impl,
 )
+
+def swig_python_bindings(*, module_names):
+    _extract_numpy_headers(
+        name = "numpy_headers",
+    )
+
+    for modname in module_names:
+        _gen_swig_python(
+            name = modname,
+            srcs = [
+                "//swig/include:{}.i".format(modname),
+            ],
+            cdeps = ["//:gdal_core"],
+            module_name = modname,
+            py_module_name = modname,
+            swig_includes = [
+                "//swig/include",
+                "//swig/include/python:includes",
+            ],
+        )
+
+        cc_library(
+            name = "_{}_lib".format(modname),
+            srcs = [modname],
+            hdrs = [":numpy_headers"],
+            copts = ["-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy"],
+            deps = [
+                "//:gdal_core",
+                # See https://github.com/bazelbuild/rules_python/issues/824
+                "@rules_python//python/cc:current_py_cc_headers",
+            ],
+            linkopts = [
+                "-lgdal_core",
+                "-L$(GENDIR)",
+            ],
+        )
+
+        native.filegroup(
+            name = "{}_shared_lib_group".format(modname),
+            srcs = ["_{}_lib".format(modname)],
+            output_group = "dynamic_library",
+        )
+
+        copy_file(
+            # Name of the rule.
+            name = "_{}".format(modname),
+            # A Label
+            src = "{}_shared_lib_group".format(modname),
+            # Path of the output file, relative to this package.
+            out = "_{}.so".format(modname),
+        )
