@@ -3,6 +3,6 @@ load("@rules_python//python:defs.bzl", "py_binary")
 py_binary(
     name = "gdal_calc",
     srcs = [":gdal_calc.py"],
-    imports = ["../.."],
+    imports = ["../..", ".."],
     deps = ["//swig/python/gdal-utils/osgeo_utils/auxiliary"],
 )
