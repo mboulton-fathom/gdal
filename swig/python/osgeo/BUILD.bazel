@@ -1,5 +1,6 @@
 load("//swig:swig.bzl", "extract_numpy_headers", "gen_swig_python")
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_python//python:defs.bzl", "py_library")
 
 _modules = [
     "gdal",
@@ -27,13 +28,6 @@ _modules = [
     for modname in _modules
 ]
 
-py_library(
-    name = "osgeo",
-    srcs = [
-        "__init__.py",
-    ] + _modules,
-)
-
 extract_numpy_headers(
     name = "numpy_headers",
 )
@@ -52,3 +46,14 @@ extract_numpy_headers(
     )
     for modname in _modules
 ]
+
+py_library(
+    name = "osgeo",
+    srcs = [
+        "__init__.py",
+    ] + _modules,
+    deps = [
+        "_{}".format(modname)
+        for modname in _modules
+    ],
+)
