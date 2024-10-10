@@ -1,4 +1,4 @@
-load("//swig:swig.bzl", "gen_swig_python")
+load("//swig:swig.bzl", "extract_numpy_headers", "gen_swig_python")
 
 _modules = [
     "gdal",
@@ -33,9 +33,15 @@ py_library(
     ] + _modules,
 )
 
+extract_numpy_headers(
+    name = "numpy_headers",
+)
+
 cc_library(
     name = "osgeo_cpp",
     srcs = _modules,
+    hdrs = [":numpy_headers"],
+    copts = ["-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy"],
     deps = [
         "//:gdal_core",
         # See https://github.com/bazelbuild/rules_python/issues/824

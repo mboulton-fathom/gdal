@@ -2,6 +2,52 @@
 
 load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory_bin_action")
+
+def _extract_numpy_headers(ctx):
+    """extracts numpy wheel and gets the headers"""
+
+    extracted = ctx.actions.declare_directory(ctx.attr.name + ".extracted")
+    ctx.actions.run(
+        executable = "unzip",
+        inputs = depset(direct = [ctx.file.numpy]),
+        outputs = [extracted],
+        arguments = ["-q", ctx.file.numpy.path, "-d", extracted.path],
+        mnemonic = "unzip",
+    )
+
+    out_folder = ctx.actions.declare_directory(ctx.attr.name + ".numpy")
+    copy_directory_bin = ctx.toolchains["@aspect_bazel_lib//lib:copy_directory_toolchain_type"].copy_directory_info.bin
+
+    args = [
+        extracted.path + "/numpy/core/include",
+        out_folder.path,
+    ]
+
+    ctx.actions.run(
+        inputs = [extracted],
+        outputs = [out_folder],
+        executable = copy_directory_bin,
+        arguments = args,
+        mnemonic = "CopyDirectory",
+        progress_message = "Copying directory ",
+    )
+
+    return [
+        DefaultInfo(files = depset(direct = [out_folder])),
+    ]
+
+extract_numpy_headers = rule(
+    attrs = {
+        "numpy": attr.label(
+            default = "@python_deps//numpy:whl",
+            allow_single_file = True,
+            doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
+        ),
+    },
+    implementation = _extract_numpy_headers,
+    toolchains = ["@aspect_bazel_lib//lib:copy_directory_toolchain_type"],
+)
 
 # Bazel rules for building swig files.
 def gen_swig_python_impl(ctx):
