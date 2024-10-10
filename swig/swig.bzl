@@ -4,7 +4,7 @@ load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory_bin_action")
-load("@rules_cc//cc:defs.bzl", "cc_import", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 def _extract_numpy_headers_impl(ctx):
     """extracts numpy wheel and gets the headers"""
@@ -171,26 +171,14 @@ def swig_python_bindings(*, module_names):
             copts = ["-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy"],
             deps = [
                 "//:gdal_core",
+                "//apps",
                 # See https://github.com/bazelbuild/rules_python/issues/824
                 "@rules_python//python/cc:current_py_cc_headers",
             ],
-            linkopts = [
-                "-lgdal_core",
-                "-L$(GENDIR)",
-            ],
         )
 
-        native.filegroup(
-            name = "{}_shared_lib_group".format(modname),
-            srcs = ["_{}_lib".format(modname)],
-            output_group = "dynamic_library",
-        )
-
-        copy_file(
-            # Name of the rule.
+        native.cc_shared_library(
             name = "_{}".format(modname),
-            # A Label
-            src = "{}_shared_lib_group".format(modname),
-            # Path of the output file, relative to this package.
-            out = "_{}.so".format(modname),
+            shared_lib_name = "_{}.so".format(modname),
+            deps = ["_{}_lib".format(modname)],
         )
