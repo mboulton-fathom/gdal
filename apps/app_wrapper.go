@@ -10,6 +10,7 @@ import (
     "path/filepath"
 
     "github.com/bazelbuild/rules_go/go/runfiles"
+    "github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
 var WrappedBinary string
@@ -48,7 +49,7 @@ func run() error {
     if !exists(gdalData) {
         return fmt.Errorf("couldn't locate proj data at %s", projDataTar)
     }
-    projTmp, err := os.MkdirTemp("", "")
+    projTmp, err := os.MkdirTemp(bazel.TestTmpDir(), "")
     if err != nil {
         return fmt.Errorf("os.MkdirTemp(): %w", err)
     }
