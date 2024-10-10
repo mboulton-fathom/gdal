@@ -1,5 +1,7 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 
+package(default_visibility = ["//:__subpackages__"])
+
 py_binary(
     name = "gdal_calc",
     srcs = [":gdal_calc.py"],

@@ -70,3 +70,8 @@ gdal_app(
         ":ogr2ogr_bin.cpp",
     ],
 )
+
+alias(
+    name = "gdal_calc.py",
+    actual = "//swig/python/gdal-utils/osgeo_utils:gdal_calc",
+)
