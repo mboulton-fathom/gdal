@@ -4,7 +4,7 @@ load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory_bin_action")
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
 
 def _extract_numpy_headers_impl(ctx):
     """extracts numpy wheel and gets the headers"""
@@ -177,7 +177,7 @@ def swig_python_bindings(*, module_names):
             ],
         )
 
-        native.cc_shared_library(
+        cc_shared_library(
             name = "_{}".format(modname),
             shared_lib_name = "_{}.so".format(modname),
             deps = ["_{}_lib".format(modname)],
