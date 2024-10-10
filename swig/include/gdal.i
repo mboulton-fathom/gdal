@@ -993,7 +993,7 @@ GDALDriverShadow *IdentifyDriverEx( const char* utf8_path,
 %}
 #else
 %inline %{
-  char **GeneralCmdLineProcessor( char **papszArgv, int nOptions = 0 ) {
+  static char **GeneralCmdLineProcessor( char **papszArgv, int nOptions = 0 ) {
     int nResArgCount;
 
     if( papszArgv == NULL )
