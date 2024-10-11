@@ -83,6 +83,9 @@ def gen_swig_python_impl(ctx):
         # See swig/python/modify_cpp_files.cmake
         substitutions = {
             "PyObject *resultobj = 0;": "PyObject *resultobj = 0; int bLocalUseExceptionsCode = GetUseExceptions();",
+            "obj = PyUnicode_AsUTF8String(obj);": "obj = PyUnicode_AsUTF8String(obj); if (!obj) return SWIG_TypeError;",
+            "return resultobj;": "if ( ReturnSame(bLocalUseExceptionsCode) ) { CPLErr eclass = CPLGetLastErrorType(); if ( eclass == CE_Failure || eclass == CE_Fatal ) { Py_XDECREF(resultobj); SWIG_Error( SWIG_RuntimeError, CPLGetLastErrorMsg() ); return NULL; } }\n  return resultobj;",
+            "if (--interpreter_counter != 0) // another sub-interpreter may still be using the swig_module's types": "/* Even Rouault / GDAL hack for SWIG >= 4.1 related to objects not being freed. See swig/python/modify_cpp_files.cmake for more details */\nif( 1 )",
         },
     )
 
