@@ -1,14 +1,7 @@
 package(default_visibility = ["//:__subpackages__"])
 
-exports_files(
-    glob(
-        ["*.i"],
-        allow_empty = False,
-    ),
-)
-
 filegroup(
-    name = "includes",
+    name = "python",
     srcs = glob(
         [
             "docs/*i",

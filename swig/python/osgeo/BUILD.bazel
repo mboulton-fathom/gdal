@@ -22,7 +22,7 @@ py_library(
         "__init__.py",
     ] + _modules,
     data = [
-        "_{}".format(modname)
+        "_{}.so".format(modname)
         for modname in _modules
     ],
 )
