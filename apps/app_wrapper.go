@@ -91,7 +91,7 @@ func run() error {
         }
     }
 
-    cmd.Env = append(cmd.Env, fmt.Sprintf("PROJ_DATA=%s", projTmp))
+    cmd.Env = append(cmd.Env, fmt.Sprintf("PROJ_DATA=%s", filepath.Join(projTmp, "data")))
 
     cmd.Stdout = os.Stdout
     cmd.Stderr = os.Stderr
