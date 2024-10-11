@@ -6,10 +6,10 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory_bin_action")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
 
-def _extract_numpy_headers_impl(ctx):
-    """extracts numpy wheel and gets the headers"""
+def _extract_numpy_impl(ctx):
+    """unzips numpy wheel"""
 
-    extracted = ctx.actions.declare_directory(ctx.attr.name + ".extracted")
+    extracted = ctx.actions.declare_directory(ctx.attr.name)
     ctx.actions.run(
         executable = "unzip",
         inputs = [ctx.file.numpy],
@@ -18,26 +18,8 @@ def _extract_numpy_headers_impl(ctx):
         mnemonic = "unzip",
     )
 
-    # We only care about the headers, so copy them into their own directory
-    out_folder = ctx.actions.declare_directory(ctx.attr.name + ".numpy")
-    copy_directory_bin = ctx.toolchains["@aspect_bazel_lib//lib:copy_directory_toolchain_type"].copy_directory_info.bin
-
-    args = [
-        extracted.path + "/numpy/core/include",
-        out_folder.path,
-    ]
-
-    ctx.actions.run(
-        inputs = [extracted],
-        outputs = [out_folder],
-        executable = copy_directory_bin,
-        arguments = args,
-        mnemonic = "CopyDirectory",
-        progress_message = "Copying directory",
-    )
-
     return [
-        DefaultInfo(files = depset(direct = [out_folder])),
+        DefaultInfo(files = depset(direct = [extracted])),
     ]
 
 _extract_numpy_headers = rule(
@@ -45,11 +27,11 @@ _extract_numpy_headers = rule(
         "numpy": attr.label(
             default = "@gdal_python_deps//numpy:whl",
             allow_single_file = True,
-            doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
+            doc = "numpy wheel to get headers from to build gdal_array.i",
         ),
     },
-    doc = "extracts the given numpy wheel and copies the header directory into a top-level directory",
-    implementation = _extract_numpy_headers_impl,
+    doc = "extracts the given numpy wheel",
+    implementation = _extract_numpy_impl,
     toolchains = ["@aspect_bazel_lib//lib:copy_directory_toolchain_type"],
 )
 
@@ -69,16 +51,13 @@ def gen_swig_python_impl(ctx):
     includes_folders = includes_folders[::-1]
     args += ["-I" + d for d in includes_folders]
 
-    # Add any C header deps
-    cc_include_dirs = []
+    # Add any C header deps and deduplicate
     cc_includes = []
     for dep in ctx.attr.cdeps:
-        cc_include_dirs += [h.dirname for h in dep[CcInfo].compilation_context.headers.to_list()]
         cc_includes += dep[CcInfo].compilation_context.headers.to_list()
-
-    # deduplicate
-    cc_include_dirs = sets.to_list(sets.make(cc_include_dirs))
     cc_includes = sets.to_list(sets.make(cc_includes))
+
+    cc_include_dirs = [h.dirname for h in cc_includes]
 
     args += ["-I" + x for x in cc_include_dirs]
     args += ["-o", cc_out_tmp.path]
@@ -129,11 +108,6 @@ _gen_swig_python = rule(
                 "@swig//:lib_python",
             ],
         ),
-        "numpy": attr.label(
-            default = "@gdal_python_deps//numpy:whl",
-            allow_single_file = True,
-            doc = "numpy wheel to use to build gdal_array.i. Defaults to 1.26.4",
-        ),
         "module_name": attr.string(mandatory = True),
         "py_module_name": attr.string(mandatory = True),
         "swig_binary": attr.label(
@@ -173,10 +147,12 @@ def swig_python_bindings(*, module_names):
             srcs = [modname],
             hdrs = [":numpy_headers"],
             copts = [
-                # Allow in-tree builds
-                "-I$(GENDIR)/swig/python/osgeo/numpy_headers.numpy",
-                # Allow out-of-tree builds
-                "-I$(GENDIR)/external/gdal+/swig/python/osgeo/numpy_headers.numpy",
+                # Generate multiple include paths for different scenarios
+                "-I$(GENDIR)/{basedir}/swig/python/osgeo/numpy_headers/numpy/{include_folder}".format(basedir = basedir, include_folder = include_folder)
+                # Allow building in-tree and from an external repo
+                for basedir in ["", "external/gdal+"]
+                # Allow using numpy v1 and numpy v2
+                for include_folder in ["core/include", "_core/include"]
             ],
             deps = [
                 "//:gdal_core",
