@@ -18,10 +18,8 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/osgeo/")
 set(GDAL_PYTHON_CSOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/extensions/")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/extensions/")
 set(GDAL_PYTHON_CSOURCES
-    ${GDAL_PYTHON_CSOURCE_DIR}/gdal_wrap.cpp
-    ${GDAL_PYTHON_CSOURCE_DIR}/gdalconst_wrap.c
-    ${GDAL_PYTHON_CSOURCE_DIR}/gnm_wrap.cpp
-    ${GDAL_PYTHON_CSOURCE_DIR}/ogr_wrap.cpp
+    ${GDAL_PYTHON_CSOURCE_DIR}/gdal_wrap.cpp ${GDAL_PYTHON_CSOURCE_DIR}/gdalconst_wrap.c
+    ${GDAL_PYTHON_CSOURCE_DIR}/gnm_wrap.cpp ${GDAL_PYTHON_CSOURCE_DIR}/ogr_wrap.cpp
     ${GDAL_PYTHON_CSOURCE_DIR}/osr_wrap.cpp)
 
   list(APPEND GDAL_SWIG_COMMON_INTERFACE_FILES
@@ -51,11 +49,9 @@ set(GDAL_PYTHON_CSOURCES
        ${PROJECT_SOURCE_DIR}/swig/include/python/docs/osr_coordinatetransformation_docs.i)
 
   set(GDAL_PYTHON_PYSOURCES
-      ${CMAKE_CURRENT_BINARY_DIR}/osgeo/gdal.py
-      ${CMAKE_CURRENT_BINARY_DIR}/osgeo/gdalconst.py
+      ${CMAKE_CURRENT_BINARY_DIR}/osgeo/gdal.py ${CMAKE_CURRENT_BINARY_DIR}/osgeo/gdalconst.py
       ${CMAKE_CURRENT_BINARY_DIR}/osgeo/gnm.py
-      ${CMAKE_CURRENT_BINARY_DIR}/osgeo/ogr.py
-      ${CMAKE_CURRENT_BINARY_DIR}/osgeo/osr.py)
+      ${CMAKE_CURRENT_BINARY_DIR}/osgeo/ogr.py ${CMAKE_CURRENT_BINARY_DIR}/osgeo/osr.py)
   include(GdalSwigBindings)
   if( ${SWIG_VERSION} VERSION_LESS "4.1" )
       set(SWIG_PY3_DEPRECATED "-py3")
