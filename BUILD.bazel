@@ -70,6 +70,7 @@ cc_library(
         "$(GENDIR)/port",
         "apps",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "@curl",
         "@libdeflate_with_gzip",
