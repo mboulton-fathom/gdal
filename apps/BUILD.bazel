@@ -1,4 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("//apps:gdal_app.bzl", "gdal_app")
 
 package(default_visibility = ["//:__subpackages__"])
@@ -11,7 +10,7 @@ filegroup(
     ]),
 )
 
-cc_library(
+filegroup(
     name = "apps",
     srcs = glob(
         [
@@ -25,16 +24,7 @@ cc_library(
         "commonutils.cpp",
         "gdalargumentparser.cpp",
         "nearblack_lib_floodfill.cpp",
-    ],
-    hdrs = [
-        "//apps:headers",
-        "//apps/argparse:headers",
-    ],
-    defines = ["GDAL_COMPILATION"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:gdal_core",
-    ],
+    ]
 )
 
 gdal_app(

@@ -4,6 +4,7 @@ package(default_visibility = ["//:__subpackages__"])
 
 # Dependencies for apps
 DEP_FOLDERS = [
+    "apps",
     "alg",
     "alg/internal_libqhull",
     "alg/marching_squares",
@@ -45,7 +46,7 @@ cc_library(
         for d in DEP_FOLDERS
     ] + [
         "//alg:polygonize_polygonizer.cpp",
-        "//apps:headers",
+        "//apps/argparse:headers",
     ],
     defines = [
         "GDAL_COMPILATION",
@@ -68,7 +69,7 @@ cc_library(
     includes = DEP_FOLDERS + [
         "$(GENDIR)/gcore",
         "$(GENDIR)/port",
-        "apps",
+        "apps/argparse"
     ],
     visibility = ["//visibility:public"],
     deps = [

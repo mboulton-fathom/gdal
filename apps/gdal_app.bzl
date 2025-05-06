@@ -8,7 +8,7 @@ def gdal_app(*, name, deps = [], **kwargs):
         name = raw_name,
         defines = ["GDAL_COMPILATION"],
         deps = deps + [
-            "//apps",
+            "//:gdal_core",
         ],
         visibility = ["//visibility:private"],
         **kwargs
