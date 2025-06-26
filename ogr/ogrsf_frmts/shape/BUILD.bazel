@@ -6,7 +6,6 @@ filegroup(
     name = "headers",
     srcs = glob([
         "*.h",
-        "*.hpp",
         "dbfopen.c",
         "shptree.c",
         "shpopen.c",

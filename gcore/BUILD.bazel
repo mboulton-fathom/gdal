@@ -30,7 +30,6 @@ filegroup(
 filegroup(
     name = "gcore",
     srcs = glob([
-        "*.c",
         "*.cpp",
     ]),
 )

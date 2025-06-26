@@ -6,7 +6,6 @@ filegroup(
     name = "headers",
     srcs = glob([
         "*.h",
-        "*.hpp",
     ]),
 )
 
@@ -14,6 +13,5 @@ filegroup(
     name = "libtiff",
     srcs = glob([
         "*.c",
-        "*.cpp",
     ]),
 )

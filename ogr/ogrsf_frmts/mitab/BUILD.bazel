@@ -6,14 +6,12 @@ filegroup(
     name = "headers",
     srcs = glob([
         "*.h",
-        "*.hpp",
     ]),
 )
 
 filegroup(
     name = "mitab",
     srcs = glob([
-        "*.c",
         "*.cpp",
     ]),
 )

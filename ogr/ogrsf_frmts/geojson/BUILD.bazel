@@ -13,7 +13,6 @@ filegroup(
 filegroup(
     name = "geojson",
     srcs = glob([
-        "*.c",
         "*.cpp",
     ]),
 )
