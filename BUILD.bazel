@@ -74,7 +74,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "@curl",
-        "@libdeflate_with_gzip",
+        "@libdeflate_with_gzip//:libdeflate",
         "@proj",
         "@sqlite3",
         "@zlib",
