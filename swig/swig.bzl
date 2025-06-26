@@ -135,7 +135,7 @@ def swig_python_bindings(*, module_names):
         _gen_swig_python(
             name = modname,
             src = "//swig/include:{}.i".format(modname),
-            cdeps = ["//:gdal_core"],
+            cdeps = ["//:gdal"],
             module_name = modname,
             py_module_name = modname,
             swig_includes = [
@@ -158,7 +158,7 @@ def swig_python_bindings(*, module_names):
                 for include_folder in ["core/include", "_core/include"]
             ],
             deps = [
-                "//:gdal_core",
+                "//:gdal",
                 "//apps",
                 # See https://github.com/bazelbuild/rules_python/issues/824
                 "@rules_python//python/cc:current_py_cc_headers",
