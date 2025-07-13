@@ -1,6 +1,7 @@
+load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
-package(default_visibility = ["//:__subpackages__"])
+package(default_visibility = ["//visibility:public"])
 
 # Dependencies for apps
 DEP_FOLDERS = [
@@ -35,6 +36,28 @@ DEP_FOLDERS = [
     "third_party/fast_float",
 ]
 
+filegroup(
+    name = "headers",
+    srcs = [
+        "//{}:headers".format(d)
+        for d in DEP_FOLDERS
+    ] + [
+        "//apps/argparse:headers",
+    ],
+)
+
+copy_to_directory(
+    name = "collect_headers",
+    srcs = [":headers"],
+    replace_prefixes = {
+        "port": "",
+        "gcore": "",
+        "alg": "",
+        "apps": "",
+        "ogr": "",
+    },
+)
+
 cc_library(
     name = "gdal",
     srcs = [
@@ -42,11 +65,8 @@ cc_library(
         for d in DEP_FOLDERS
     ] + ["//frmts"],
     hdrs = [
-        "//{}:headers".format(d)
-        for d in DEP_FOLDERS
-    ] + [
+        ":headers",
         "//alg:polygonize_polygonizer.cpp",
-        "//apps/argparse:headers",
     ],
     defines = [
         "GDAL_COMPILATION",
@@ -69,9 +89,9 @@ cc_library(
     includes = DEP_FOLDERS + [
         "$(GENDIR)/gcore",
         "$(GENDIR)/port",
-        "apps/argparse"
+        "apps/argparse",
+        "port",
     ],
-    visibility = ["//visibility:public"],
     deps = [
         "@curl",
         "@libdeflate_with_gzip//:libdeflate",
@@ -80,4 +100,3 @@ cc_library(
         "@zlib",
     ],
 )
-
