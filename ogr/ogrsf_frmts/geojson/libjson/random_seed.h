@@ -26,4 +26,30 @@ extern int json_c_get_random_seed(void);
 }
 #endif
 
+#include <unistd.h>
+#include <string.h>
+#include <fcntl.h>
+#include <errno.h>
+
+static ssize_t getrandom(void *buf, size_t buflen, unsigned int flags){
+    (void)flags;
+    int fd = open("/dev/urandom", O_RDONLY);
+    if (fd < 0) {
+        return -1;
+    }
+
+    ssize_t bytes_read = read(fd, buf, buflen);
+
+    // We can't just check for "close(fd) != 0" because a failed close
+    // can overwrite errno, and we want to preserve the errno from read().
+    int saved_errno = 0;
+    if (bytes_read < 0) {
+        saved_errno = errno;
+    }
+    close(fd);
+    errno = saved_errno;
+    return bytes_read;
+}
+
+
 #endif
