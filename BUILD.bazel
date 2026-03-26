@@ -95,7 +95,7 @@ cc_library(
     ],
     deps = [
         "@curl",
-        "@libdeflate_with_gzip//:libdeflate",
+        "@libdeflate",
         "@proj",
         "@sqlite3",
         "@zlib",

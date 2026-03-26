@@ -1,9 +1,9 @@
 ## https://github.com/tensorflow/tensorflow/blob/v0.6.0/tensorflow/tensorflow.bzl
 
-load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
-load("@bazel_skylib//lib:sets.bzl", "sets")
-load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory_bin_action")
+load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
+load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
 
 def _extract_numpy_impl(ctx):
@@ -159,7 +159,7 @@ def swig_python_bindings(*, module_names):
             ],
             deps = [
                 "//:gdal",
-                "//apps",
+                #                "//apps",
                 # See https://github.com/bazelbuild/rules_python/issues/824
                 "@rules_python//python/cc:current_py_cc_headers",
             ],
